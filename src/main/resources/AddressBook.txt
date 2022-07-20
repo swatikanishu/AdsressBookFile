@@ -1,0 +1,2 @@
+FirstName,Lastname,Address,City,State,ZipCode,Contact Number,Email id
+swatika,singh,lucknow,lucknow,uttarpradesh,226010,777777,r@gmail.com
