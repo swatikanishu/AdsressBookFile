@@ -1,7 +1,7 @@
 package com.bridgelabz;
 import java.io.*;
 public class AddressBookIO {
-    public static File address_book_file = new File("/home/lenovo/IdeaProjects/AddressBook/src/main/resources/AddressBook.txt");
+    public static File address_book_file = new File("C:\\Users\\Dell\\IdeaProjects\\AddressBook\\src\\main\\resources\\AddressBook");
 
     public static void createFile() {
         try {
@@ -27,7 +27,7 @@ public class AddressBookIO {
     public static void read_details_to_file() {
         try {
             String file = address_book_file.getAbsolutePath();
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new FileReader(address_book_file));
             String line = null;
             while ((line = reader.readLine()) != null) {
                 System.out.println("\n" + line);
@@ -38,3 +38,4 @@ public class AddressBookIO {
     }
 
 }
+

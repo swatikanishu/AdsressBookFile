@@ -1,7 +1,19 @@
 package com.bridgelabz;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
+
+import static com.bridgelabz.AddressBookIO.read_details_to_file;
+
 public class AddressBook {
+    static File csvFile = new File("C:\\Users\\Dell\\IdeaProjects\\AddressBook\\src\\main\\resources\\AddressBook.csv");
     public List<PersonDetails> list = new ArrayList<>(); //Creating arraylist
     Scanner scan = new Scanner(System.in); // Create a Scanner object
     // defining a method
@@ -22,6 +34,8 @@ public class AddressBook {
             System.out.println("Enter 4 to sort city");
             System.out.println("Enter 5 to sortContactByName");
             System.out.println("Enter 6 to sortByCityAndState");
+            System.out.println("Enter 7 to read the text file");
+            System.out.println("Enter 8 to read the csv file");
             switch (scan.nextInt()) {
                 case 1:
                     add();
@@ -31,8 +45,7 @@ public class AddressBook {
                     break;
                 case 3:
                     delete();
-
-                            break;
+                    break;
                 case 4:
                     searchByCity();
                     break;
@@ -40,6 +53,12 @@ public class AddressBook {
                     sortContactByName();
                 case 6:
                     sortContactByCityAndState();
+                    break;
+                case 7:
+                    read_details_to_file();
+                    break;
+                case 8:
+                    readFromCSVFile();
                     break;
                 default:
                     status = false;
@@ -129,6 +148,7 @@ public class AddressBook {
                     case 7:
                         System.out.println("Re-Correct your Email");
                         contacts.setEmail(scan.next());
+
                 }
 
             }
@@ -180,12 +200,33 @@ public class AddressBook {
         list.stream().sorted(Comparator.comparing(PersonDetails::getState)).forEach(System.out::println);
         System.out.println();
     }
-    private  void File_read_and_write() {
+    private  void File_read_and_add() {
         AddressBookIO.createFile();
         String input = list.toString();
         AddressBookIO.add_details_to_file(input);
-        AddressBookIO.read_details_to_file();
+        read_details_to_file();
     }
+    public static void readFromCSVFile() {
+        try (Reader reader = Files.newBufferedReader(Paths.get(String.valueOf(csvFile)));
+             CSVReader csvReader = new CSVReader(reader))
+        {String[] nextRecord;
+            while ((nextRecord = csvReader.readNext()) != null){
+                System.out.println("First Name: " + nextRecord[0]);
+                System.out.println("Last Name: " + nextRecord[1]);
+                System.out.println("Address: " + nextRecord[2]);
+                System.out.println("City: " + nextRecord[3]);
+                System.out.println("State: " + nextRecord[4]);
+                System.out.println("Pin Code: " + nextRecord[5]);
+                System.out.println("Mobile Number: " + nextRecord[6]);
+                System.out.println("Email Address: " + nextRecord[7]);
+            }
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        } catch (CsvValidationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     // Overriding toString() method of String class
@@ -196,4 +237,6 @@ public class AddressBook {
                 '}';
     }
 }
+
+
 
