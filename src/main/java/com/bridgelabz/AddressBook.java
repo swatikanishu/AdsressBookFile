@@ -31,7 +31,8 @@ public class AddressBook {
                     break;
                 case 3:
                     delete();
-                    break;
+
+                            break;
                 case 4:
                     searchByCity();
                     break;
